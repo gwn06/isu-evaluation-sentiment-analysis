@@ -12,7 +12,7 @@ enum SentimentResult {
 
 export default function Admin() {
     const router = useRouter();
-    const userType = localStorage.getItem('user');
+    const userType = typeof window !== undefined ? localStorage.getItem('user') : null;
     if (userType !== 'admin') {
         router.replace('/');
     }
