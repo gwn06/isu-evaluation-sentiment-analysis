@@ -12,25 +12,32 @@ enum SentimentResult {
 
 export default function Admin() {
     const router = useRouter();
-    const userType = typeof window !== undefined ? localStorage.getItem('user') : null;
-    if (userType !== 'admin') {
-        router.replace('/');
-    }
-    const { isLoading, isError, data } = useQuery('sheets', () => fetch('/api/hello', { next: { revalidate: 30 } }).then(res => res.json()), {
-        onSuccess(data) {
-            setSubmissions(data);
-        }
-    })
+    const [user, setUser] = useState<string | null>(null);
+    // const userType = typeof window !== undefined ? localStorage.getItem('user') : null;
 
     const [selectedResult, setSelectedResult] = useState(SentimentResult.ALL);
     const [submissions, setSubmissions] = useState<string[][]>([]);
     const [isRowLoading, setIsRowLoading] = useState(false);
 
     useEffect(() => {
+        const savedUser = localStorage.getItem('user')
+        setUser(savedUser);
+
+        if (user !== 'admin') {
+            router.replace('/');
+        }
+    }, [router, user])
+
+    const { isLoading, isError, data } = useQuery('sheets', () => fetch('/api/hello', { next: { revalidate: 30 } }).then(res => res.json()), {
+        onSuccess(data) {
+            setSubmissions(data);
+        }
+    })
+    useEffect(() => {
         if (submissions.length > 0) {
 
         }
-    }, [submissions])
+    }, [submissions, user])
 
     if (isLoading) {
         return <main className="h-screen flex justify-center items-center"><svg version="1.1" className='w-32 h-32' id="L9" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
