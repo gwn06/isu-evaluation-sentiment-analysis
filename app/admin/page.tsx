@@ -23,7 +23,7 @@ export default function Admin() {
         const savedUser = localStorage.getItem('user')
         setUser(savedUser);
 
-        if (user !== 'admin') {
+        if (savedUser !== 'admin') {
             router.replace('/');
         }
     }, [router, user])
@@ -37,7 +37,7 @@ export default function Admin() {
         if (submissions.length > 0) {
 
         }
-    }, [submissions, user])
+    }, [submissions])
 
     if (isLoading) {
         return <main className="h-screen flex justify-center items-center"><svg version="1.1" className='w-32 h-32' id="L9" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
