@@ -19,7 +19,9 @@ export async function POST(request: Request) {
 
   let output = null;
   try {
-    output = await inference.textClassification({ inputs: data.comment, model: "distilbert-base-uncased-finetuned-sst-2-english" });
+    // nlptown/bert-base-multilingual-uncased-sentiment
+    // output = await inference.textClassification({ inputs: data.comment, model: "distilbert-base-uncased-finetuned-sst-2-english" });
+    output = await inference.textClassification({ inputs: data.comment, model: "cardiffnlp/twitter-roberta-base-sentiment-latest" });
     // output = await fetch('api/model',
     // {
     //   method: 'POST', headers: {

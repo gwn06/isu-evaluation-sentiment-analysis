@@ -92,9 +92,11 @@ export default function Admin() {
                                 {row.map((data, i) => {
                                     if (i === 5) {
                                         const sentiment: Array<{ label: string, score: number }> = JSON.parse(data);
-                                        const content1 = `${sentiment[0].label}: ${sentiment[0].score.toFixed(3)}`
-                                        const content2 = `${sentiment[1].label}: ${sentiment[1].score.toFixed(3)}`
-                                        return <td className="md:p-5" key={i}><span className="border border-blue-500 p-1 rounded-full">{content1}</span><br />{content2}</td>
+                                        const content1 = `${sentiment[0].label.toUpperCase()}: ${sentiment[0].score.toFixed(3)}`
+                                        const content2 = `${sentiment[1].label.toUpperCase()}: ${sentiment[1].score.toFixed(3)}`
+                                        let content3 = `${sentiment[2]?.label.toUpperCase()}: ${sentiment[2]?.score.toFixed(3)}`
+                                        content3 = content3.includes("undefined") ? "" : content3;
+                                        return <td className="md:p-5" key={i}><span className="border border-blue-500 p-1 rounded-full">{content1}</span><br />{content2}<br /> {content3}</td>
                                     }
                                     return <td key={i} className="p-5">{data}</td>
                                 })}
