@@ -154,7 +154,10 @@ export default function Admin() {
                     <thead className=" text-gray-700 bg-blue-50 ">
                         <tr className=''>
                             {submissions[0].map((header: string, index: number) => {
-                                return <th key={index} scope='col' className='break-words px-6 py-3 w-60 text-center'>{header}</th>
+                                if (index === 4) {
+                                    return <th key={index} scope='col' className='break-words px-6 py-3 w-60 text-center'>{header}</th>
+                                }
+                                return <th key={index} scope='col' className='break-words px-6 py-3  text-center'>{header}</th>
                             })}
                         </tr>
                     </thead>
