@@ -150,11 +150,11 @@ export default function Admin() {
             <div className="h-8"></div>
 
             <div className="overflow-auto">
-                <table className="m-auto text-sm text-left text-gray-500 border table-auto ">
+                <table className="m-auto text-sm text-left text-gray-500 border ">
                     <thead className=" text-gray-700 bg-blue-50 ">
                         <tr className=''>
                             {submissions[0].map((header: string, index: number) => {
-                                return <th key={index} scope='col' className='break-words px-6 py-3 text-center'>{header}</th>
+                                return <th key={index} scope='col' className='break-words px-6 py-3 w-60 text-center'>{header}</th>
                             })}
                         </tr>
                     </thead>
