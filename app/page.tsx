@@ -81,12 +81,12 @@ export default function Home() {
 
         <form onSubmit={handleSubmit}>
           <div className="w-96 pt-10 ml-5 md:ml-20">
-            <label htmlFor="name" className="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Name (Optional)</label>
+            <label htmlFor="name" className="block mb-2 text-xl font-medium text-gray-900 ">Name (Optional)</label>
             <input name='username' type="text" id="name" className="capitalize border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " />
           </div>
 
           <div className="mb-6 w-96 pt-10 ml-5 md:ml-20">
-            <label htmlFor="course" className="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Course <span className='text-red-500'>*</span></label>
+            <label htmlFor="course" className="block mb-2 text-xl font-medium text-gray-900 ">Course <span className='text-red-500'>*</span></label>
             <input placeholder='BSCS' name='course' type="text" id="course" className="uppercase border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
           </div>
           <QuestionnaireInputTable isMissingField={incompleteTableData} />
