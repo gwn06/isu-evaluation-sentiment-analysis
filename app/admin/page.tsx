@@ -94,21 +94,23 @@ export default function Admin() {
         data.forEach((arr) => {
             let highestScore = -Infinity;
             let highestSentiment = "";
-
             const sentiment = JSON.parse(arr[5]);
-            sentiment.forEach((obj: any) => {
-                if (obj.score > highestScore) {
-                    highestScore = obj.score;
-                    highestSentiment = obj.label;
-                }
-            });
+            if (sentiment !== null) {
 
-            if (highestSentiment.toLowerCase() === "positive") {
-                counts.positive++;
-            } else if (highestSentiment.toLowerCase() === "negative") {
-                counts.negative++;
-            } else if (highestSentiment.toLowerCase() === "neutral") {
-                counts.neutral++;
+                sentiment.forEach((obj: any) => {
+                    if (obj.score > highestScore) {
+                        highestScore = obj.score;
+                        highestSentiment = obj.label;
+                    }
+                });
+
+                if (highestSentiment.toLowerCase() === "positive") {
+                    counts.positive++;
+                } else if (highestSentiment.toLowerCase() === "negative") {
+                    counts.negative++;
+                } else if (highestSentiment.toLowerCase() === "neutral") {
+                    counts.neutral++;
+                }
             }
         });
 
@@ -169,6 +171,9 @@ export default function Admin() {
                                 {row.map((data, j) => {
                                     if (j === kSentiment) {
                                         const sentiment: Array<{ label: string, score: number }> = JSON.parse(data);
+                                        if (sentiment === null) {
+                                            return <td className="md:p-5" key={j}>*</td>
+                                        }
                                         const content1 = `${sentiment[0].label.toUpperCase()}: ${sentiment[0].score.toFixed(3)}`
                                         const content2 = `${sentiment[1].label.toUpperCase()}: ${sentiment[1].score.toFixed(3)}`
                                         let content3 = `${sentiment[2]?.label.toUpperCase()}: ${sentiment[2]?.score.toFixed(3)}`
