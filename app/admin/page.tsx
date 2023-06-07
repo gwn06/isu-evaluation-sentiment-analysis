@@ -84,6 +84,8 @@ export default function Admin() {
     const totalSubmissions = submissions.length - 1;
     console.log(JSON.parse(submissions[10][5]));
 
+    const y_pred: number[] = []
+
     const countSentiments = (data: string[][]) => {
         const counts = {
             positive: 0,
@@ -104,13 +106,18 @@ export default function Admin() {
             });
 
             if (highestSentiment.toLowerCase() === "positive") {
+                y_pred.push(0);
                 counts.positive++;
             } else if (highestSentiment.toLowerCase() === "negative") {
+                y_pred.push(1);
                 counts.negative++;
             } else if (highestSentiment.toLowerCase() === "neutral") {
+                y_pred.push(2);
                 counts.neutral++;
             }
         });
+
+        console.log("y_pred: ", y_pred);
 
         return counts;
     }
