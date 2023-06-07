@@ -22,7 +22,7 @@ export default function Admin() {
     const [submissions, setSubmissions] = useState<string[][]>([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const submissionsPerPage = 10;
+    const submissionsPerPage = 20;
     // Logic for displaying submissions
     const indexOfLastSubmission = currentPage * submissionsPerPage;
     const indexOfFirstSubmission = indexOfLastSubmission - submissionsPerPage;
@@ -30,13 +30,51 @@ export default function Admin() {
     const currentSubmissions = indexOfFirstSubmission === 0 ? submissions.slice(kSkipHeaderIndex, indexOfLastSubmission) : submissions.slice(indexOfFirstSubmission, indexOfLastSubmission);
 
     // Logic for pagination
-    const pageNumbers = [];
+    const pageNumbers: any[] = [];
     for (let i = 1; i <= Math.ceil(submissions.length / submissionsPerPage); i++) {
         pageNumbers.push(i);
     }
 
     const handleClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
+    };
+
+    const isFirstPage = currentPage === 1;
+    const isLastPage = currentPage === submissionsPerPage;
+
+    const handleFirstPage = () => {
+        setCurrentPage(1);
+    };
+
+    const handlePreviousPage = () => {
+        setCurrentPage((prevPage) => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => prevPage + 1);
+    };
+
+    const handleLastPage = () => {
+        console.log(pageNumbers.length)
+        setCurrentPage(pageNumbers.length);
+    };
+
+    const getPageRange = () => {
+        const currentPageIndex = pageNumbers.indexOf(currentPage);
+        let startPage = currentPageIndex - 2;
+        let endPage = currentPageIndex + 2;
+
+        if (startPage < 0) {
+            startPage = 0;
+            endPage = Math.min(4, submissionsPerPage - 1);
+        }
+
+        if (endPage >= submissionsPerPage) {
+            endPage = submissionsPerPage - 1;
+            startPage = Math.max(0, endPage - 4);
+        }
+
+        return pageNumbers.slice(startPage, endPage + 1);
     };
 
 
@@ -189,7 +227,7 @@ export default function Admin() {
             </div>
 
             {/* Pagination */}
-            <div className="flex justify-center mt-4">
+            {/* <div className="flex justify-center mt-4">
                 {pageNumbers.map((pageNumber) => (
                     <button
                         key={pageNumber}
@@ -200,6 +238,50 @@ export default function Admin() {
                         {pageNumber}
                     </button>
                 ))}
+            </div> */}
+            <div className="flex justify-center mt-4">
+                <button
+                    className="mx-1 px-3 py-1 rounded-md"
+                    disabled={isFirstPage}
+                    onClick={handleFirstPage}
+                >
+                    First
+                </button>
+
+                <button
+                    className="mx-1 px-3 py-1 rounded-md"
+                    disabled={isFirstPage}
+                    onClick={handlePreviousPage}
+                >
+                    Previous
+                </button>
+
+                {getPageRange().map((pageNumber) => (
+                    <button
+                        key={pageNumber}
+                        className={`mx-1 px-3 py-1 rounded-md ${pageNumber === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+                            }`}
+                        onClick={() => handleClick(pageNumber)}
+                    >
+                        {pageNumber}
+                    </button>
+                ))}
+
+                <button
+                    className="mx-1 px-3 py-1 rounded-md"
+                    disabled={isLastPage}
+                    onClick={handleNextPage}
+                >
+                    Next
+                </button>
+
+                <button
+                    className="mx-1 px-3 py-1 rounded-md"
+                    disabled={isLastPage}
+                    onClick={handleLastPage}
+                >
+                    Last
+                </button>
             </div>
             <div className="mb-10"></div>
         </main>
