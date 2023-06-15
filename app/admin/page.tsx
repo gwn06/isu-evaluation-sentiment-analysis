@@ -129,6 +129,8 @@ export default function Admin() {
             neutral: 0
         };
 
+        const y_pred: number[] = [];
+
         data.forEach((arr) => {
             let highestScore = -Infinity;
             let highestSentiment = "";
@@ -143,16 +145,19 @@ export default function Admin() {
                 });
 
                 if (highestSentiment.toLowerCase() === "positive") {
+                    y_pred.push(0)
                     counts.positive++;
                 } else if (highestSentiment.toLowerCase() === "negative") {
+                    y_pred.push(1)
                     counts.negative++;
                 } else if (highestSentiment.toLowerCase() === "neutral") {
+                    y_pred.push(2)
                     counts.neutral++;
                 }
             }
         });
 
-
+        console.log("ypred: ", y_pred);
         return counts;
     }
 
@@ -194,20 +199,29 @@ export default function Admin() {
                 <table className="m-auto text-sm text-left text-gray-500 border ">
                     <thead className=" text-gray-700 bg-blue-50 ">
                         <tr className=''>
-                            {submissions[0].map((header: string, index: number) => {
+                            {/* {submissions[0].map((header: string, index: number) => {
                                 if (index === 4) {
                                     return <th key={index} scope='col' className='break-words px-6 py-3 w-60 text-center'>{header}</th>
                                 }
                                 return <th key={index} scope='col' className='break-words px-6 py-3  text-center'>{header}</th>
-                            })}
+                            })} */}
+                            <th scope='col' className='break-words px-6 py-3  text-center'>{submissions[0][0]}</th>
+                            <th scope='col' className='break-words px-6 py-3 w-60 text-center'>{submissions[0][4]}</th>
+                            <th scope='col' className='break-words px-6 py-3  text-center'>Scoring</th>
+                            <th scope='col' className='break-words px-6 py-3  text-center'>Polarity</th>
                         </tr>
                     </thead>
                     <tbody>
                         {currentSubmissions.map((row, i) => {
 
                             // return <></>
+                            const sentiment = JSON.parse(row[5]) ?? [{ label: '*', score: -123 }];
                             return <tr key={i} className={`p-4 px-48 border ${i % 2 == 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                                {row.map((data, j) => {
+                                <td className="p-5">{row[0]}</td>
+                                <td className="p-5">{row[4]}</td>
+                                <td className="p-5">{sentiment[0].score.toFixed(4)}</td>
+                                <td className="p-5">{sentiment[0].label.toUpperCase()}</td>
+                                {/* {row.map((data, j) => {
                                     if (j === kSentiment) {
                                         const sentiment: Array<{ label: string, score: number }> = JSON.parse(data);
                                         if (sentiment === null) {
@@ -220,7 +234,7 @@ export default function Admin() {
                                         return <td className="md:p-5" key={j}><span className="border font-semibold border-blue-500 p-1 rounded-full">{content1}</span><br />{content2}<br /> {content3}</td>
                                     }
                                     return <td key={j} className="p-5">{data}</td>
-                                })}
+                                })} */}
                             </tr>
                         })}
                     </tbody>
